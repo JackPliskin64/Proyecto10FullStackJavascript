@@ -22,7 +22,7 @@ export const apiFetch = async (endpoint, options = {}) => {
     const response = await fetch(`${BASE_URL}${endpoint}`, finalOptions);
     return response;
   } catch (error) {
-    console.error("Fetch error:", error);
+    console.error("Error de fetch:", error);
     throw error;
   }
 };

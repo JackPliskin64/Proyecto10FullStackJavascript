@@ -5,23 +5,23 @@ export function render() {
   return `
       <h2>Register</h2>
       <form id="register-form">
-        <label for="username">Username:</label>
+        <label for="username">Nombre de usuario:</label>
         <input type="text" id="username" name="username" />
         
-        <label for="email">Email:</label>
+        <label for="email">Correo electrónico:</label>
         <input type="email" id="email" name="email" />
   
-        <label for="password">Password:</label>
+        <label for="password">Contraseña:</label>
         <input type="password" id="password" name="password" />
         
-        <label for="confirm-password">Confirm Password:</label>
+        <label for="confirm-password">Confirmar contraseña:</label>
         <input type="password" id="confirm-password" name="confirm-password" />
   
-        <button type="submit">Register</button>
+        <button type="submit">Registrar</button>
       </form>
       <div id="error-message-container"></div>
       <div id="requirements-container"></div>
-      <div id="required-acctions-container" style="display: none"> <p id="req-acctions-title">Required acctions:</p></div>
+      <div id="required-acctions-container" style="display: none"> <p id="req-acctions-title">Acciones requeridas:</p></div>
     `;
 }
 
@@ -133,11 +133,12 @@ export function setupRegister() {
       const usernameValue = usernameInput.value.trim();
 
       const req1 = document.createElement("p");
-      req1.textContent = "Username debe tener al menos 3 caracteres";
+      req1.textContent =
+        "El nombre de usuario debe tener al menos 3 caracteres.";
       req1.style.color = usernameValue.length >= 3 ? "green" : "red";
 
       const req2 = document.createElement("p");
-      req2.textContent = "Debe tener al menos un número";
+      req2.textContent = "Debe tener al menos un número.";
       req2.style.color = /\d/.test(usernameValue) ? "green" : "red";
 
       reqs.appendChild(req1);
@@ -146,19 +147,19 @@ export function setupRegister() {
       const passwordValue = passwordInput.value.trim();
 
       const req1 = document.createElement("p");
-      req1.textContent = "La contraseña debe tener al menos 6 caracteres";
+      req1.textContent = "La contraseña debe tener al menos 6 caracteres.";
       req1.style.color = passwordValue.length >= 6 ? "green" : "red";
 
       const req2 = document.createElement("p");
-      req2.textContent = "Debe contener al menos una mayúscula";
+      req2.textContent = "Debe contener al menos una mayúscula.";
       req2.style.color = /[A-Z]/.test(passwordValue) ? "green" : "red";
 
       const req3 = document.createElement("p");
-      req3.textContent = "Debe contener al menos una minúscula";
+      req3.textContent = "Debe contener al menos una minúscula.";
       req3.style.color = /[a-z]/.test(passwordValue) ? "green" : "red";
 
       const req4 = document.createElement("p");
-      req4.textContent = "Debe contener al menos un número";
+      req4.textContent = "Debe contener al menos un número.";
       req4.style.color = /\d/.test(passwordValue) ? "green" : "red";
 
       reqs.appendChild(req1);
@@ -235,7 +236,6 @@ export function setupRegister() {
   function validateUsername() {
     const element_id = "invalid-username";
     if (validateUsernameReqs()) {
-      //añadir comprobación username existnete
       clearRequiredActions(element_id);
       updateRequiredActions();
       return true;
@@ -274,7 +274,7 @@ const submitRegister = async (username, email, password) => {
   };
 
   const loadingMessage = document.createElement("p");
-  loadingMessage.textContent = "Processing registration...";
+  loadingMessage.textContent = "Procesando registro...";
   document
     .querySelector("#error-message-container")
     .appendChild(loadingMessage);
@@ -307,7 +307,6 @@ const submitRegister = async (username, email, password) => {
     showSuccessMessage("Registro exitoso! Realizando el login...");
 
     setTimeout(() => {
-      //loadComponent("login");
       submit(username, password);
     }, 2000);
   } catch (error) {

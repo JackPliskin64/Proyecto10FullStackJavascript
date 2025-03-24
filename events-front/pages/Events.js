@@ -2,32 +2,32 @@ import { apiFetch } from "../services/apiFetch";
 
 export function render() {
   return `
-    <h2>Events</h2>
+    <h2>Eventos</h2>
     <div id="events-list"></div>
     <div id="error-message"></div>
-    <button id="create-event-button" style="display: none;">Create Event</button>
+    <button id="create-event-button" style="display: none;">Crear evento</button>
     <div id="create-event-form-container" style="display: none;">
-      <h3>Create New Event</h3>
+      <h3>Crear nuevo evento</h3>
       <form id="create-event-form">
-        <label for="event-title">Title:</label>
+        <label for="event-title">Título del evento:</label>
         <input type="text" id="event-title" required />
         
-        <label for="event-description">Description:</label>
+        <label for="event-description">Descripción:</label>
         <textarea id="event-description" required></textarea>
 
-        <label for="event-date">Date:</label>
+        <label for="event-date">Fecha:</label>
         <input type="datetime-local" id="event-date" required />
 
-        <label for="event-location">Location:</label>
+        <label for="event-location">Ubicación:</label>
         <input type="text" id="event-location" required />
 
-        <label for="event-image">Event Image:</label>
+        <label for="event-image">Imagen del evento:</label>
         <input type="file" id="event-image" accept="image/*" style="display:none;" />
-        <button id="upload-image-btn">Upload Image</button>
+        <button id="upload-image-btn">Subir imagen</button>
 
         <div id="buttons-container">
-          <button type="submit" id="confirm-create-event-btn">Create Event</button>
-          <button type="button" id="cancel-create-event-btn">Cancel</button>
+          <button type="submit" id="confirm-create-event-btn">Crear evento</button>
+          <button type="button" id="cancel-create-event-btn">Cancelar</button>
         </div>
         
       </form>
@@ -73,10 +73,10 @@ export async function setupEvents() {
                 <p>${new Date(event.date).toLocaleDateString()}</p>
                 <p>${event.location}</p>
                 <div class="button-container">
-                <button class="view-event-btn">View Details</button>
+                <button class="view-event-btn">Ver detalles</button>
                 ${
                   token && !isCreator && !isAttending
-                    ? `<button class="attend-event-btn">Attend Event</button>`
+                    ? `<button class="attend-event-btn">Participar</button>`
                     : ""
                 }
                 </div>
@@ -87,17 +87,17 @@ export async function setupEvents() {
 
         attachEventListeners();
       } else {
-        eventsListContainer.innerHTML = "<p>No events found.</p>";
+        eventsListContainer.innerHTML = "<p>No se encontraron eventos.</p>";
       }
     } else {
-      console.error("Error fetching events:", res);
+      console.error("Error al hacer fetch de los eventos:", res);
       eventsListContainer.innerHTML =
-        "<p>Error fetching events. Please try again later.</p>";
+        "<p>Error al hacer fetch de los eventos. Por favor, inténtalo de nuevo más tarde.</p>";
     }
   } catch (error) {
-    console.error("Error fetching events:", error);
+    console.error("Error al hacer fetch de los eventos:", error);
     eventsListContainer.innerHTML =
-      "<p>Error fetching events. Please try again later.</p>";
+      "<p>Error al hacer fetch de los eventos. Por favor, inténtalo de nuevo más tarde.</p>";
   }
 
   createEventButton.addEventListener("click", () => {
@@ -137,7 +137,7 @@ export async function setupEvents() {
     try {
       const res = await apiFetch(`/events/${eventId}`, { method: "GET" });
       if (!res.ok) {
-        throw new Error("Error fetching event details");
+        throw new Error("Error al hacer fetch de los detalles del evento.");
       }
       const event = await res.json();
 
@@ -167,7 +167,7 @@ export async function setupEvents() {
         ${
           event.attendees && event.attendees.length > 0
             ? `
-            <h4>Participants:</h4>
+            <h4>Participantes:</h4>
             <ul>
               ${event.attendees
                 .map(
@@ -182,7 +182,7 @@ export async function setupEvents() {
             `
             : ""
         }
-        <button id="close-event-modal">Close</button>
+        <button id="close-event-modal">Cerrar</button>
       </div>
     `;
 
@@ -201,7 +201,7 @@ export async function setupEvents() {
         overlay.remove();
       }
     } catch (error) {
-      console.error("Error fetching event details:", error);
+      console.error("Error al hacer fetch de los detalles del evento:", error);
     }
   }
 
@@ -209,7 +209,7 @@ export async function setupEvents() {
     const errorMessage = document.getElementById("error-message");
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("You need to log in to attend an event.");
+      alert("Debes iniciar sesión para participar en un evento.");
       return;
     }
 
@@ -224,16 +224,17 @@ export async function setupEvents() {
       const data = await res.json();
 
       if (res.ok && data.message !== "No changes") {
-        console.log("You have successfully joined the event!", data);
-        errorMessage.textContent = "You have successfully joined the event!";
+        console.log("¡Te has unido al evento!", data);
+        errorMessage.textContent = "¡Te has unido al evento!";
         errorMessage.style.color = "green";
         setupEvents();
       } else {
-        throw new Error("Failed to join the event.");
+        throw new Error("Fallo al unirse al evento.");
       }
     } catch (error) {
-      console.error("Error joining event:", error);
-      errorMessage.textContent = "An error occurred. Please try again.";
+      console.error("Fallo al unirse al evento:", error);
+      errorMessage.textContent =
+        "Ocurrió un error. Por favor, inténtalo de nuevo.";
       errorMessage.style.color = "red";
     }
   }
@@ -243,13 +244,13 @@ export function setupCreateEvent() {
   const createEventForm = document.getElementById("create-event-form");
   const feedbackMessage = document.getElementById("feedback-message");
   const formContainer = document.getElementById("create-event-form-container");
-  const maxFileSize = 5 * 1024 * 1024; // 5 MB
+  const maxFileSize = 5 * 1024 * 1024;
 
   createEventForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const loadingMessage = document.createElement("p");
-    loadingMessage.textContent = "Processing your request...";
+    loadingMessage.textContent = "Procesando tu petición...";
     loadingMessage.style.color = "blue";
     loadingMessage.style.display = "none";
     createEventForm.parentElement.appendChild(loadingMessage);
@@ -263,13 +264,14 @@ export function setupCreateEvent() {
     const image = document.getElementById("event-image").files[0];
 
     if (image && image.size > maxFileSize) {
-      feedbackMessage.textContent = "Image size must be less than 5MB.";
+      feedbackMessage.textContent =
+        "El tamaño de la imagen debe ser menor a 5MB.";
       feedbackMessage.style.color = "red";
       return;
     }
 
     if (!title || !description || !date || !location) {
-      feedbackMessage.textContent = "All fields are required!";
+      feedbackMessage.textContent = "Todos los campos son requeridos.";
       feedbackMessage.style.color = "red";
       return;
     }
@@ -297,19 +299,20 @@ export function setupCreateEvent() {
       });
 
       if (res.ok) {
-        feedbackMessage.textContent = "Event created successfully!";
+        feedbackMessage.textContent = "Evento creado correctamente.";
         feedbackMessage.style.color = "green";
 
         setupEvents();
       } else {
         formContainer.style.display = "block";
-        feedbackMessage.textContent = "Failed to create event.";
+        feedbackMessage.textContent = "Fallo al crear evento.";
         feedbackMessage.style.color = "red";
       }
     } catch (error) {
       formContainer.style.display = "block";
-      console.error("Error creating event:", error);
-      feedbackMessage.textContent = "An error occurred. Please try again.";
+      console.error("Error al crear el evento:", error);
+      feedbackMessage.textContent =
+        "Ocurrió un error. Por favor, inténtalo de nuevo.";
       feedbackMessage.style.color = "red";
     } finally {
       loadingMessage.style.display = "none";

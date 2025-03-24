@@ -2,13 +2,13 @@ import { apiFetch } from "../services/apiFetch";
 import { loadComponent } from "../main";
 export function render() {
   return `
-    <h2>Login</h2>
+    <h2>Iniciar Sesión</h2>
     <form id="login-form">
-      <label for="username">Username:</label>
+      <label for="username">Nombre de usuario:</label>
       <input type="text" id="username" name="username" />
-      <label for="password">Password:</label>
+      <label for="password">Contraseña:</label>
       <input type="password" id="password" name="password" />
-      <button type="submit">Login</button>
+      <button type="submit">Iniciar Sesión</button>
     </form>
     <div id="error-message-container"></div>
   `;
@@ -30,20 +30,22 @@ export function setupLogin() {
     const password = passwordInput.value.trim();
 
     if (!username || !password) {
-      showErrorMessage("Username and password cannot be empty.");
+      showErrorMessage(
+        "El nombre de usuario y la contraseña no pueden estar vacíos."
+      );
       return;
     }
 
     if (password.length < 6) {
-      showErrorMessage("Password too short.");
+      showErrorMessage("La contraseña es demasiado corta.");
       return;
     }
 
     try {
       await submit(username, password);
     } catch (error) {
-      console.error("Login failed:", error);
-      showErrorMessage("An error occurred. Please try again later.");
+      console.error("Error al iniciar sesión:", error);
+      showErrorMessage("Ha ocurrido un error. Por favor, inténtalo más tarde.");
     }
   });
 }
@@ -82,7 +84,7 @@ export const submit = async (username, password) => {
     });
 
     if (res.status === 404 || res.status === 401) {
-      showErrorMessage("Invalid username or password.");
+      showErrorMessage("Usuario o contraseña incorrectos.");
       return;
     }
 
@@ -95,7 +97,7 @@ export const submit = async (username, password) => {
     loadComponent("home");
   } catch (error) {
     showErrorMessage(
-      "There was an error while trying to log in. Please try again later."
+      "Hubo un error al intentar iniciar sesión. Por favor, inténtelo de nuevo más tarde."
     );
   }
 };

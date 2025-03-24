@@ -2,23 +2,23 @@ import { apiFetch } from "../services/apiFetch";
 
 export function render() {
   return `
-    <h2>My Profile</h2>
+    <h2>Mi Perfil</h2>
     <div id="profile-container">
       <div id="profile-picture-section">
-        <img id="profile-picture" src="default-profile.jpg" alt="Profile Picture" />
+        <img id="profile-picture" src="default-profile.jpg" alt="Imagen de Perfil" />
         <input type="file" id="profile-image-upload" accept="image/*" style="display:none;" />
-        <button id="upload-image-btn">Upload Image</button>
+        <button id="upload-image-btn">Subir Imagen</button>
       </div>
       
       <div id="profile-details-section">
         <p id="email-section">
-          <strong>Email:</strong> <span id="user-email"></span>
+          <strong>Correo electrónico:</strong> <span id="user-email"></span>
         </p>
-        <p><strong>Username:</strong> <span id="user-name"></span> <button id="edit-username-btn">Edit</button></p>
+        <p><strong>Nombre de usuario:</strong> <span id="user-name"></span> <button id="edit-username-btn">Editar</button></p>
         <form id="username-form" style="display:none;">
           <input type="text" id="username-input" value="" />
-          <button type="submit" id="update-username-btn">Update Username</button>
-          <button type="button" id="cancel-update-btn">Cancel</button>
+          <button type="submit" id="update-username-btn">Actualizar nombre de usuario</button>
+          <button type="button" id="cancel-update-btn">Cancelar</button>
         </form>
         <p id="feedback-message"></p>
       </div>
@@ -40,8 +40,8 @@ export async function setupMyProfile() {
 
   const userId = localStorage.getItem("user");
   if (!userId) {
-    console.error("No user found in localStorage");
-    feedbackMessage.textContent = "Failed to load user profile.";
+    console.error("No se encontró el usuario en el localStorage");
+    feedbackMessage.textContent = "Fallo al cargar el perfil del usuario.";
     feedbackMessage.style.color = "red";
     return;
   }
@@ -58,12 +58,13 @@ export async function setupMyProfile() {
       usernameInput.value = userName;
       profilePicture.src = image;
     } else {
-      feedbackMessage.textContent = "Failed to load user profile.";
+      feedbackMessage.textContent = "Fallo al cargar el perfil del usuario.";
       feedbackMessage.style.color = "red";
     }
   } catch (error) {
     console.error("Error loading user data:", error);
-    feedbackMessage.textContent = "An error occurred. Please try again.";
+    feedbackMessage.textContent =
+      "Ocurrió un error. Por favor, inténtalo de nuevo.";
     feedbackMessage.style.color = "red";
   }
 
@@ -83,17 +84,21 @@ export async function setupMyProfile() {
     e.preventDefault();
     const newUsername = usernameInput.value.trim();
     if (!newUsername) {
-      feedbackMessage.textContent = "Username no puede ser vacío";
+      feedbackMessage.textContent =
+        "El nombre de usuario no puede estar vacío.";
       return;
     } else if (userNameSpan.textContent.trim() === newUsername) {
-      feedbackMessage.textContent = "Username coincide con el valor antiguo";
+      feedbackMessage.textContent =
+        "El nombre de usuario nuevo es el mismo que el antiguo.";
       return;
     }
 
     const token = localStorage.getItem("token");
 
     if (!token) {
-      console.error("No token found, user is not authenticated.");
+      console.error(
+        "No se encontró el token, el usuario no esta autentificado."
+      );
       return;
     }
 
@@ -107,19 +112,21 @@ export async function setupMyProfile() {
       });
 
       if (res) {
-        feedbackMessage.textContent = "Username updated successfully!";
+        feedbackMessage.textContent =
+          "El nombre de usuario se actualizó correctamente.";
         feedbackMessage.style.color = "green";
         userNameSpan.textContent = newUsername;
         usernameForm.style.display = "none";
         userNameSpan.style.display = "inline";
         editUsernameBtn.style.display = "inline";
       } else {
-        feedbackMessage.textContent = "Username already exists!";
+        feedbackMessage.textContent = "El nombre de usuario ya existe.";
         feedbackMessage.style.color = "red";
       }
     } catch (error) {
-      console.error("Error updating username:", error);
-      feedbackMessage.textContent = "An error occurred. Please try again.";
+      console.error("Error ual actualizar el nombre de usuario:", error);
+      feedbackMessage.textContent =
+        "Ocurrió un error. Por favor, inténtalo de nuevo.";
     }
   });
 
@@ -131,7 +138,7 @@ export async function setupMyProfile() {
     const file = imageUploadInput.files[0];
     if (!file) return;
 
-    feedbackMessage.textContent = "Processing registration...";
+    feedbackMessage.textContent = "Procesando registro...";
     feedbackMessage.style.color = "blue";
     const formData = new FormData();
     formData.append("img", file);
@@ -140,7 +147,7 @@ export async function setupMyProfile() {
     try {
       const res = await apiFetch(`/users/profileImage/${userId}`, {
         method: "PUT",
-        body: formData, // No JSON.stringify para FormData
+        body: formData,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -149,15 +156,16 @@ export async function setupMyProfile() {
       if (res.ok) {
         const { imageUrl } = await res.json();
         profilePicture.src = imageUrl;
-        feedbackMessage.textContent = "Profile picture updated!";
+        feedbackMessage.textContent = "Imagen de perfil actualizada.";
         feedbackMessage.style.color = "green";
       } else {
-        feedbackMessage.textContent = "Failed to upload image.";
+        feedbackMessage.textContent = "Fallo al subir la imagen.";
         feedbackMessage.style.color = "red";
       }
     } catch (error) {
-      console.error("Error uploading image:", error);
-      feedbackMessage.textContent = "An error occurred. Please try again.";
+      console.error("Error  al subir la imagen:", error);
+      feedbackMessage.textContent =
+        "Ocurrió un error. Por favor, inténtalo de nuevo.";
     }
   });
 }

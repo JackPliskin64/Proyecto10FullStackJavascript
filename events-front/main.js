@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   logoutLink.addEventListener("click", (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
-    alert("You have logged out.");
+    alert("Has cerrado sesión.");
     updateLogoutLinkVisibility();
     loadComponent("home");
   });
@@ -71,7 +71,7 @@ export const loadComponent = (component) => {
           module.setupEvents();
         })
         .catch((err) => {
-          console.error("Error loading events module:", err);
+          console.error("Error cargando el módulo de eventos:", err);
         });
       break;
     case "login":
@@ -81,7 +81,7 @@ export const loadComponent = (component) => {
           module.setupLogin();
         })
         .catch((err) => {
-          console.error("Error loading login module:", err);
+          console.error("Error cargando el módulo de login:", err);
         });
       break;
     case "register":
@@ -97,54 +97,10 @@ export const loadComponent = (component) => {
           module.setupMyProfile();
         })
         .catch((err) => {
-          console.error("Error loading login module:", err);
+          console.error("Error cargando el módulo de login:", err);
         });
       break;
     default:
-      console.log("Componente no encontrado");
+      console.log("Componente no encontrado.");
   }
 };
-/*
-export const loadComponent = (component) => {
-  const componentsMap = {
-    events: {
-      path: "./pages/Events.js",
-      setup: "setupEvents",
-    },
-    login: {
-      path: "./pages/Login.js",
-      setup: "setupLogin",
-    },
-    register: {
-      path: "./pages/Register.js",
-      setup: "setupRegister",
-    },
-    personalPage: {
-      path: "./pages/PersonalPage.js",
-      setup: "setupPersonalPage",
-    },
-  };
-
-  const selectedComponent = componentsMap[component];
-
-  if (!selectedComponent) {
-    console.log("Componente no encontrado");
-    return;
-  }
-
-  import( selectedComponent.path)
-    .then((module) => {
-      changeMainContent(module.render());
-      if (
-        selectedComponent.setup &&
-        typeof module[selectedComponent.setup] === "function"
-      ) {
-        module[selectedComponent.setup]();
-      }
-    })
-    .catch((err) => {
-      console.error(`Error loading ${component} module:`, err);
-    });
-};
-
-*/
