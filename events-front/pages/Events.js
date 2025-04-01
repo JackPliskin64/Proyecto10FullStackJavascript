@@ -23,8 +23,10 @@ export function render() {
 
         <label for="event-image">Imagen del evento:</label>
         <input type="file" id="event-image" accept="image/*" style="display:none;" />
-        <button id="upload-image-btn">Subir imagen</button>
+        <button id="upload-image-btn" type="button">Subir imagen</button>
 
+        <div id="image-name-display">No se ha seleccionado ninguna imagen.</div>
+        
         <div id="buttons-container">
           <button type="submit" id="confirm-create-event-btn">Crear evento</button>
           <button type="button" id="cancel-create-event-btn">Cancelar</button>
@@ -41,6 +43,9 @@ export async function setupEvents() {
   const createEventButton = document.getElementById("create-event-button");
   const cancelCreateEvent = document.getElementById("cancel-create-event-btn");
   const formContainer = document.getElementById("create-event-form-container");
+
+  formContainer.style.display = "none";
+  eventsListContainer.style.display = "flex";
 
   const token = localStorage.getItem("token");
   if (token) {
@@ -244,7 +249,22 @@ export function setupCreateEvent() {
   const createEventForm = document.getElementById("create-event-form");
   const feedbackMessage = document.getElementById("feedback-message");
   const formContainer = document.getElementById("create-event-form-container");
+  const uploadImageBtn = document.getElementById("upload-image-btn");
+  const imageUploadInput = document.getElementById("event-image");
+  const imageNameDisplay = document.getElementById("image-name-display");
   const maxFileSize = 5 * 1024 * 1024;
+
+  imageUploadInput.addEventListener("change", () => {
+    if (imageUploadInput.files[0]) {
+      imageNameDisplay.textContent = `¡Imagen seleccionada!`;
+    } else {
+      imageNameDisplay.textContent = "No se ha seleccionado ninguna imagen.";
+    }
+  });
+
+  uploadImageBtn.addEventListener("click", () => {
+    imageUploadInput.click();
+  });
 
   createEventForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -261,7 +281,7 @@ export function setupCreateEvent() {
       .value.trim();
     const date = document.getElementById("event-date").value;
     const location = document.getElementById("event-location").value.trim();
-    const image = document.getElementById("event-image").files[0];
+    const image = imageUploadInput.files[0];
 
     if (image && image.size > maxFileSize) {
       feedbackMessage.textContent =
@@ -299,9 +319,6 @@ export function setupCreateEvent() {
       });
 
       if (res.ok) {
-        feedbackMessage.textContent = "Evento creado correctamente.";
-        feedbackMessage.style.color = "green";
-
         setupEvents();
       } else {
         formContainer.style.display = "block";

@@ -14,13 +14,16 @@ export function render() {
         <p id="email-section">
           <strong>Correo electrónico:</strong> <span id="user-email"></span>
         </p>
-        <p><strong>Nombre de usuario:</strong> <span id="user-name"></span> <button id="edit-username-btn">Editar</button></p>
-        <form id="username-form" style="display:none;">
+        <div id="username-section"> 
+        <p><strong>Nombre de usuario:</strong> 
+        <span id="user-name"></span> <div id="edit-username-div"><button id="edit-username-btn">Editar</button></p></div>
+        
+        <form id="username-form" style="display:none; gap:1rem">
           <input type="text" id="username-input" value="" />
           <button type="submit" id="update-username-btn">Actualizar nombre de usuario</button>
           <button type="button" id="cancel-update-btn">Cancelar</button>
         </form>
-        <p id="feedback-message"></p>
+        <p id="feedback-message"></p></div>
       </div>
     </div>
   `;

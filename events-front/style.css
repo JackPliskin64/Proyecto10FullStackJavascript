@@ -1,324 +1,252 @@
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
-  }
-  
-  header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  header h1 {
-    font-size: 2rem;
-    margin: 0;
-  }
-  
-  header a {
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    margin: 0 15px;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  header a:hover {
-    background-color: #45a049;
-  }
-  
-  #logoutlink, #profilelink {
-    display: none;
-  }
-  
-  footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    margin-top: 20px;
-  }
-  
-  #requirements-container {
-    background-color: #f9f9f9;
-    color: #333;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    font-size: 0.9rem;
-  }
-  
-  #required-acctions-container {
-    border: 1px solid #ffd700;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    font-size: 0.9rem;
-  }
+  font-family: "Arial", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #eef7ee;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-  /*EVENTS*/
-  #events-list {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .event-item {
-    width: 200px;
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  #create-event-form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    width: 80%;
-    margin: 20px auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  #create-event-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-  }
-  
-  #create-event-form input,
-  #create-event-form textarea {
-    padding: 10px;
-    font-size: 16px;
-  }
-  
-  #create-event-form button {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  #create-event-form button:hover {
-    background-color: #0056b3;
-  }
+header {
+  background: linear-gradient(135deg, #3a7d44, #4caf50);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-bottom: 4px solid #2e5a33;
+}
 
-  #create-event-form #cancel-create-event-btn{
-    background-color: #b6322e;
-  }
+header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
 
-  #create-event-form #cancel-create-event-btn:hover{
-    background-color: #8b2724;
-  }
+header a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  margin: 0 15px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
 
-  #buttons-container{
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+header a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
 
-    #confirm-create-event-btn {
-      background-color: #28a745;
-    }
+#logoutlink,
+#profilelink {
+  display: none;
+}
 
-    #confirm-create-event-btn:hover {
-      background-color: #18662a;
-    }
-  }
+footer {
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: auto;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  position: fixed;
+}
 
-  #event-image {
-    display: inline-block;
-    width: auto;
-  }
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  flex-grow: 1;
+}
 
-  .button-container{
-    display: flex;
-    gap: 10px;
-  }
+#requirements-container,
+#required-acctions-container {
+  background-color: white;
+  border: 2px solid #3a7d44;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 10px;
+  font-size: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-  #event-details-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    z-index: 999;
-    display: none;
-  }
+#events-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
 
-  #event-details-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    width: 80%;
-    max-width: 500px;
-    max-height: 80vh;
-    overflow-y: auto;
-    display: none;
-  }
+.event-item {
+  width: 220px;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
 
-  #event-details-modal h3 {
-    text-align: center;
-    font-size: 1.5em;
-    margin-bottom: 10px;
-  }
+.event-item:hover {
+  transform: translateY(-5px);
+}
 
-  .event-image {
-    width: 100%;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-  
-  .participant-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-  
-  .participant-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
+.event-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  #close-event-modal {
-    margin-top: 15px;
-    padding: 10px;
-    border: none;
-    background: #007bff;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  #close-event-modal:hover {
-    background: #0056b3;
-  }
-  
-  /*PersonalPage*/
-  #profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    width: 80%;
-    margin: 20px auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  #profile-picture-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  #profile-picture {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #666;
-  }
-  
-  #profile-image-upload {
-    display: none;
-  }
-  
-  #upload-image-btn {
-    background-color: #007bff;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  #upload-image-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  #profile-details-section {
-    display: flex;
-    flex-direction: column;
-  }
+.participant-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3a7d44;
+}
 
-  #profile-details-section p {
-    margin: 5px 0;
-  }
-  
-  #username-form {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  #username-input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-  }
-  
-  #update-username-btn, #edit-username-btn, #cancel-update-btn {
-    background-color: #28a745;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+button {
+  background: linear-gradient(135deg, #3a7d44, #4caf50);
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
 
-  #cancel-update-btn{
-    background-color: #b6322e;
-  }
-  
-  #update-username-btn:hover, #edit-username-btn:hover, #cancel-update-btn:hover {
-    background-color: #218838;
-  }
+button:hover {
+  background: linear-gradient(135deg, #2e5a33, #3e8b42);
+}
 
-  #cancel-update-btn:hover {
-    background-color: #8b2724;
-  }
-  
-  #feedback-message {
-    color: red;
-    font-size: 12px;
-    text-align: center;
-  }
+#create-event-button {
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+}
+
+#create-event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#event-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+  display: none;
+}
+
+#event-details-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 80%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  display: none;
+}
+
+#profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 30px;
+  border: 1px solid #3a7d44;
+  border-radius: 10px;
+  width: 80%;
+  margin: 20px auto;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#profile-picture-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#email-section {
+  margin: 0;
+  margin-top: 4rem;
+}
+
+#username-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#edit-username-div {
+  display: flex;
+  justify-content: center;
+}
+
+#profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #3a7d44;
+}
+
+#upload-image-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#upload-image-btn:hover {
+  background: #003f80;
+}
+
+#update-username-btn,
+#edit-username-btn,
+#cancel-update-btn {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#cancel-update-btn {
+  background-color: #b6322e;
+}
+
+#update-username-btn:hover,
+#edit-username-btn:hover {
+  background-color: #218838;
+}
+
+#cancel-update-btn:hover {
+  background-color: #8b2724;
+}

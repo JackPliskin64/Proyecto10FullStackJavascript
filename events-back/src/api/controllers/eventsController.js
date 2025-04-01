@@ -58,6 +58,7 @@ const getEventByTitle = async (req, res, next) => {
 };
 
 const createEvent = async (req, res, next) => {
+  console.log(req);
   try {
     const newEvent = new Event({
       title: req.body.title,
