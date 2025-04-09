@@ -3,7 +3,8 @@ import { apiFetch } from "../services/apiFetch.js";
 
 export function render() {
   return `
-      <h2>Register</h2>
+    <div id="register-container">
+      <h2>Registro</h2>
       <form id="register-form">
         <label for="username">Nombre de usuario:</label>
         <input type="text" id="username" name="username" />
@@ -17,11 +18,12 @@ export function render() {
         <label for="confirm-password">Confirmar contraseña:</label>
         <input type="password" id="confirm-password" name="confirm-password" />
   
-        <button type="submit">Registrar</button>
+        <button type="submit">Registrarse</button>
       </form>
       <div id="error-message-container"></div>
-      <div id="requirements-container"></div>
-      <div id="required-acctions-container" style="display: none"> <p id="req-acctions-title">Acciones requeridas:</p></div>
+      <div id="requirements-container" style="display: none"></div>
+      <div id="required-acctions-container" style="display: none"> <p id="req-acctions-title"><strong>Acciones requeridas:</strong></p></div>
+      </div>
     `;
 }
 
@@ -37,7 +39,6 @@ export function setupRegister() {
   const reqAcctionsContainer = document.querySelector(
     "#required-acctions-container"
   );
-  const reqsContainer = document.querySelector("#requirements-container");
 
   usernameInput.addEventListener("focus", () => {
     isUsernameInput = true;
@@ -127,6 +128,7 @@ export function setupRegister() {
   const showRequirements = () => {
     clearRequirements();
     const reqsContainer = document.querySelector("#requirements-container");
+    reqsContainer.style.display = "block";
     const reqs = document.createElement("div");
     reqs.id = "requirements";
     if (isUsernameInput) {
@@ -172,6 +174,8 @@ export function setupRegister() {
 
   const clearRequirements = () => {
     const existingReqs = document.getElementById("requirements");
+    const reqsContainer = document.querySelector("#requirements-container");
+    reqsContainer.style.display = "none";
     if (existingReqs) {
       existingReqs.remove();
     }

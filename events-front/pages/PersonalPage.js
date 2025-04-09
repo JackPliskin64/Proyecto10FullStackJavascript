@@ -17,8 +17,7 @@ export function render() {
         <div id="username-section"> 
         <p><strong>Nombre de usuario:</strong> 
         <span id="user-name"></span> <div id="edit-username-div"><button id="edit-username-btn">Editar</button></p></div>
-        
-        <form id="username-form" style="display:none; gap:1rem">
+        <form id="username-form">
           <input type="text" id="username-input" value="" />
           <button type="submit" id="update-username-btn">Actualizar nombre de usuario</button>
           <button type="button" id="cancel-update-btn">Cancelar</button>
@@ -75,17 +74,20 @@ export async function setupMyProfile() {
     userNameSpan.style.display = "none";
     editUsernameBtn.style.display = "none";
     usernameForm.style.display = "flex";
+    feedbackMessage.style.display = "none";
   });
 
   cancelUpdateBtn.addEventListener("click", () => {
     userNameSpan.style.display = "inline";
     editUsernameBtn.style.display = "inline";
     usernameForm.style.display = "none";
+    feedbackMessage.style.display = "none";
   });
 
   usernameForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const newUsername = usernameInput.value.trim();
+    feedbackMessage.style.display = "inline";
     if (!newUsername) {
       feedbackMessage.textContent =
         "El nombre de usuario no puede estar vacío.";
@@ -113,7 +115,7 @@ export async function setupMyProfile() {
         },
         body: JSON.stringify({ userName: newUsername }),
       });
-
+      feedbackMessage.style.display = "inline";
       if (res) {
         feedbackMessage.textContent =
           "El nombre de usuario se actualizó correctamente.";
@@ -127,6 +129,7 @@ export async function setupMyProfile() {
         feedbackMessage.style.color = "red";
       }
     } catch (error) {
+      feedbackMessage.style.display = "inline";
       console.error("Error ual actualizar el nombre de usuario:", error);
       feedbackMessage.textContent =
         "Ocurrió un error. Por favor, inténtalo de nuevo.";
@@ -140,7 +143,7 @@ export async function setupMyProfile() {
   imageUploadInput.addEventListener("change", async () => {
     const file = imageUploadInput.files[0];
     if (!file) return;
-
+    feedbackMessage.style.display = "inline";
     feedbackMessage.textContent = "Procesando registro...";
     feedbackMessage.style.color = "blue";
     const formData = new FormData();

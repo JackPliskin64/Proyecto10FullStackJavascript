@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
   logoutLink.addEventListener("click", (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
-    alert("Has cerrado sesión.");
     updateLogoutLinkVisibility();
     loadComponent("home");
   });
@@ -104,3 +103,5 @@ export const loadComponent = (component) => {
       console.log("Componente no encontrado.");
   }
 };
+
+loadComponent("events");

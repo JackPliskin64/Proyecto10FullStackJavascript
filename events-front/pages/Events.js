@@ -2,7 +2,8 @@ import { apiFetch } from "../services/apiFetch";
 
 export function render() {
   return `
-    <h2>Eventos</h2>
+  <div class="events-main">
+    <h1>¡Encuentra tu próximo evento favorito!</h2>
     <div id="events-list"></div>
     <div id="error-message"></div>
     <button id="create-event-button" style="display: none;">Crear evento</button>
@@ -35,6 +36,7 @@ export function render() {
       </form>
        <div id="feedback-message"></div>
     </div>
+    </div>
   `;
 }
 
@@ -43,6 +45,7 @@ export async function setupEvents() {
   const createEventButton = document.getElementById("create-event-button");
   const cancelCreateEvent = document.getElementById("cancel-create-event-btn");
   const formContainer = document.getElementById("create-event-form-container");
+  const errorMessage = document.getElementById("error-message");
 
   formContainer.style.display = "none";
   eventsListContainer.style.display = "flex";
@@ -75,8 +78,13 @@ export async function setupEvents() {
               <div class="event-item">
               <input type="hidden" class="event-id" value="${event._id}" />
                 <h3>${event.title}</h3>
-                <p>${new Date(event.date).toLocaleDateString()}</p>
-                <p>${event.location}</p>
+                
+                <p><span><img src="https://api.iconify.design/material-symbols:location-on-rounded.svg"></img></span><span> </span>${
+                  event.location
+                }</p>
+                <p><span><img src="https://api.iconify.design/material-symbols-light:calendar-clock-sharp.svg"></img></span><span> </span>${new Date(
+                  event.date
+                ).toLocaleDateString()}</p>
                 <div class="button-container">
                 <button class="view-event-btn">Ver detalles</button>
                 ${
@@ -106,16 +114,18 @@ export async function setupEvents() {
   }
 
   createEventButton.addEventListener("click", () => {
-    formContainer.style.display = "block";
+    formContainer.style.display = "flex";
     createEventButton.style.display = "none";
     eventsListContainer.style.display = "none";
+    errorMessage.style.display = "none";
     setupCreateEvent();
   });
 
   cancelCreateEvent.addEventListener("click", () => {
     formContainer.style.display = "none";
-    eventsListContainer.style.display = "block";
-    createEventButton.style.display = "block";
+    eventsListContainer.style.display = "flex";
+    createEventButton.style.display = "flex";
+    errorMessage.style.display = "none";
   });
 
   function attachEventListeners() {
@@ -161,9 +171,9 @@ export async function setupEvents() {
       modal.innerHTML = `
       <div class="event-modal-content">
         <h3>${event.title}</h3>
-        <p><strong>Date:</strong> ${new Date(event.date).toLocaleString()}</p>
-        <p><strong>Location:</strong> ${event.location}</p>
-        <p><strong>Description:</strong> ${event.description}</p>
+        <p><strong>Fecha:</strong> ${new Date(event.date).toLocaleString()}</p>
+        <p><strong>Ubicación:</strong> ${event.location}</p>
+        <p><strong>Descripción:</strong> ${event.description}</p>
         ${
           event.img
             ? `<img src="${event.img}" alt="${event.title}" class="event-image"/>`
@@ -173,7 +183,7 @@ export async function setupEvents() {
           event.attendees && event.attendees.length > 0
             ? `
             <h4>Participantes:</h4>
-            <ul>
+            <ul class="participants-ul">
               ${event.attendees
                 .map(
                   (attendee) => `
@@ -187,7 +197,7 @@ export async function setupEvents() {
             `
             : ""
         }
-        <button id="close-event-modal">Cerrar</button>
+        <button class="view-event-btn" id="close-event-modal">Cerrar</button>
       </div>
     `;
 
@@ -229,7 +239,6 @@ export async function setupEvents() {
       const data = await res.json();
 
       if (res.ok && data.message !== "No changes") {
-        console.log("¡Te has unido al evento!", data);
         errorMessage.textContent = "¡Te has unido al evento!";
         errorMessage.style.color = "green";
         setupEvents();

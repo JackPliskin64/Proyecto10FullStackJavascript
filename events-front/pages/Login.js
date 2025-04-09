@@ -2,7 +2,9 @@ import { apiFetch } from "../services/apiFetch";
 import { loadComponent } from "../main";
 export function render() {
   return `
-    <h2>Iniciar Sesión</h2>
+
+  <div id="login-container">
+  <h2>Iniciar Sesión</h2>
     <form id="login-form">
       <label for="username">Nombre de usuario:</label>
       <input type="text" id="username" name="username" />
@@ -10,13 +12,13 @@ export function render() {
       <input type="password" id="password" name="password" />
       <button type="submit">Iniciar Sesión</button>
     </form>
-    <div id="error-message-container"></div>
+    <div id="error-message-container"></div></div>
+    
   `;
 }
 
 export function setupLogin() {
   const form = document.querySelector("#login-form");
-  const errorMessage = document.querySelector("#error-message-container");
   const usernameInput = document.querySelector("#username");
   const passwordInput = document.querySelector("#password");
 
@@ -93,7 +95,6 @@ export const submit = async (username, password) => {
     localStorage.setItem("token", respuestaFinal.token);
     localStorage.setItem("user", respuestaFinal.user._id);
 
-    alert("Welcome!");
     loadComponent("home");
   } catch (error) {
     showErrorMessage(
